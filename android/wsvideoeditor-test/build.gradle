@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
 
@@ -17,6 +18,10 @@ android {
                 abiFilters "armeabi-v7a"
             }
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     sourceSets {
@@ -37,4 +42,6 @@ dependencies {
     implementation project(':wsvideoeditor-sdk')
     implementation 'pub.devrel:easypermissions:0.1.9'
     implementation 'com.google.protobuf:protobuf-lite:3.0.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
 }
