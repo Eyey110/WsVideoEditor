@@ -226,12 +226,12 @@ namespace whensunset {
         }
 
         void NativeWSMediaPlayer::Seek(double current_time) {
-            std::lock_guard<std::mutex> lk(mutex_);
+            SeekInternal(current_time);
         }
 
         void NativeWSMediaPlayer::SeekInternal(double render_pos) {
+            std::lock_guard<std::mutex> lk(mutex_);
             audio_player_->Pause();
-
             audio_player_->Flush();
 
             ended_ = false;
@@ -242,11 +242,17 @@ namespace whensunset {
             audio_decode_service_.ResetDecodePosition(render_pos);
 
             audio_ref_clock_.SetPts(render_pos);
+            seeking_ = false;
         }
 
         void NativeWSMediaPlayer::Play() {
             std::lock_guard<std::mutex> lk(mutex_);
+            if (seeking_) {
+                ELOGI("Call Play but be seeking");
+                return;
+            }
             if (!paused_) {
+                ELOGE("Play call failed because Player is not paused");
                 return;
             }
             if (ended_) {
