@@ -1,19 +1,33 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 28
 
     defaultConfig {
         applicationId "com.whensunset.wsvideoeditor.test"
         minSdkVersion 15
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++11"
+            }
+            ndk{
+                abiFilters "armeabi-v7a"
+            }
+        }
     }
 
     sourceSets {
         main {
+            assets.srcDirs = ['assets']
             jniLibs.srcDirs = ['libs']
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path "../../CMakeLists.txt"
         }
     }
 }
@@ -21,6 +35,6 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':wsvideoeditor-sdk')
-    compile 'pub.devrel:easypermissions:0.1.9'
+    implementation 'pub.devrel:easypermissions:0.1.9'
     implementation 'com.google.protobuf:protobuf-lite:3.0.1'
 }

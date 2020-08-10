@@ -13,6 +13,8 @@ import com.whensunset.wsvideoeditorsdk.WsVideoEditorUtils;
 import com.whensunset.wsvideoeditorsdk.model.EditorProject;
 import com.whensunset.wsvideoeditorsdk.model.MediaAsset;
 
+import java.io.File;
+
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class VideoActivity extends Activity {
@@ -45,7 +47,7 @@ public class VideoActivity extends Activity {
       super.onCreate(savedInstanceState);
       if (!EasyPermissions.hasPermissions(this, Manifest.permission.CAMERA)) {
         EasyPermissions.requestPermissions(this, "权限", 1,
-            Manifest.permission.READ_EXTERNAL_STORAGE);
+            Manifest.permission.WRITE_EXTERNAL_STORAGE);
       }
 
       WsVideoEditorUtils.initJni();
@@ -53,7 +55,7 @@ public class VideoActivity extends Activity {
       mPreviewView = findViewById(R.id.ws_media_player_view);
       EditorProject.Builder videoEditorProjectBuilder = EditorProject.newBuilder();
       MediaAsset.Builder trackAssetBuilder = MediaAsset.newBuilder();
-      trackAssetBuilder.setAssetId(System.currentTimeMillis()).setAssetPath("/sdcard/test.mp4").setVolume(1.0);
+      trackAssetBuilder.setAssetId(System.currentTimeMillis()).setAssetPath(new File(getExternalFilesDir(null), "test.mp4").getAbsolutePath()).setVolume(1.0);
       videoEditorProjectBuilder.addMediaAsset(trackAssetBuilder.build()).setBlurPaddingArea(true);
 
       mPlayer = new WsMediaPlayer();

@@ -1,0 +1,3 @@
+/Users/Eyey/AndroidProjects/WsVideoEditor/android/wsvideoeditor-sdk/.cxx/cmake/debug/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/Eyey/AndroidProjects/WsVideoEditor/android/wsvideoeditor-sdk/.cxx/cmake/debug/armeabi-v7a/CMakeFiles/rebuild_cache.dir
+/Users/Eyey/AndroidProjects/WsVideoEditor/android/wsvideoeditor-sdk/.cxx/cmake/debug/armeabi-v7a/CMakeFiles/wsvideoeditorsdk.dir
