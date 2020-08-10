@@ -13,3 +13,4 @@
 app/.externalNativeBuild/*
 wsvideoeditor-sdk/.externalNativeBuild/
 wsvideoeditor-sdk/src/main/libs/armeabi-v7a
+/.cxx
