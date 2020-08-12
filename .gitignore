@@ -33,3 +33,6 @@ reports/
 ajcore*.txt
 android/.idea/modules.xml
 cxx/
+.cxx/
+*/.cxx/
+**/.cxx/
