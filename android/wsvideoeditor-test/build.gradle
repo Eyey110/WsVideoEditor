@@ -11,9 +11,6 @@ android {
         versionCode 1
         versionName "1.0"
         externalNativeBuild {
-            cmake {
-                cppFlags "-std=c++11"
-            }
             ndk{
                 abiFilters "armeabi-v7a"
             }
@@ -28,11 +25,6 @@ android {
         main {
             assets.srcDirs = ['assets']
             jniLibs.srcDirs = ['libs']
-        }
-    }
-    externalNativeBuild {
-        cmake {
-            path "../../CMakeLists.txt"
         }
     }
 }

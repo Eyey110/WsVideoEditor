@@ -50,6 +50,7 @@ list(APPEND SOURCE_DIR_ROOT
         ${EDITORSDK2_JNI_DIR}/com_whensunset_wsvideoeditorsdk_WsVideoEditorUtils.cc
         ${EDITORSDK2_JNI_DIR}/inner/com_whensunset_wsvideoeditorsdk_inner_VideoDecoderService.cc
         ${EDITORSDK2_JNI_DIR}/android_logger.cc
+        ${EDITORSDK2_JNI_DIR}/android_ws_player.cpp
         ${EDITORSDK2_JNI_DIR}/jni_helper.cc)
 
 list(APPEND SOURCE_DIR_ROOT

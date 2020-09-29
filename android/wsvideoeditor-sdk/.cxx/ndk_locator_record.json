@@ -23,6 +23,10 @@
     },
     {
       "level": "INFO",
+      "message": "Considering /Users/Eyey/Library/Android/sdk/ndk/16.1.4479499 in SDK ndk folder"
+    },
+    {
+      "level": "INFO",
       "message": "Considering /Users/Eyey/Library/Android/sdk/ndk/20.0.5594570 in SDK ndk folder"
     },
     {

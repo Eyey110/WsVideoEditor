@@ -1,6 +1,12 @@
 package com.whensunset.wsvideoeditorsdk;
 
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.IntRange;
+import android.support.annotation.Keep;
 import android.support.annotation.NonNull;
 
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -10,6 +16,8 @@ import com.whensunset.wsvideoeditorsdk.model.jni.CreateProjectNativeReturnValue;
 import com.whensunset.wsvideoeditorsdk.util.WSMediaLog;
 
 import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.nio.ByteBuffer;
 
 import static com.whensunset.wsvideoeditorsdk.util.WSMediaLog.projectKeyParamToString;
 
@@ -23,9 +31,11 @@ public class WsMediaPlayer {
     private volatile long mNativePlayerAddress = 0;
     private final Object mLock = new Object();
     private Thread mAttachedThread;
+    private WsPlayerHandler mHandler;
 
     public WsMediaPlayer() {
         mNativePlayerAddress = newNativePlayer();
+        mHandler = new WsPlayerHandler(Looper.getMainLooper(), this);
     }
 
     public void play() {
@@ -234,6 +244,20 @@ public class WsMediaPlayer {
         WSMediaLog.i(TAG, "loadProjectInternal mProject:" + projectKeyParamToString(mProject));
     }
 
+    // call by native
+    @Keep
+    private static void postEventFromNative(Object weakThiz, int what,
+                                            int arg1, int arg2, Object obj) {
+        if (weakThiz == null)
+            return;
+        WsMediaPlayer player = (WsMediaPlayer) ((WeakReference) weakThiz).get();
+        if (player == null) {
+            return;
+        }
+        Message msg =  player.mHandler.obtainMessage(what, arg1, arg2, obj);
+        player.mHandler.sendMessage(msg);
+    }
+
     @Override
     protected void finalize() throws Throwable {
         super.finalize();
@@ -279,4 +303,19 @@ public class WsMediaPlayer {
     private native boolean isPlayingNative(long mNativePlayerAddress);
 
     private native double getCurrentTimeNative(long mNativePlayerAddress);
+
+    private static class WsPlayerHandler extends Handler {
+        WeakReference<WsMediaPlayer> mPlayerRef;
+
+         WsPlayerHandler(Looper looper, WsMediaPlayer player) {
+            super(looper);
+             mPlayerRef = new WeakReference<>(player);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            // TODO: 2020/8/12
+        }
+    }
+
 }
